@@ -12,7 +12,7 @@ chrome.storage.local.get("links", function (data) {
 				"class",
 				"list-group-item list-group-item-action justify-content-between "
 			)
-			item.setAttribute("href", link)
+			item.setAttribute("href", link[0])
 			item.setAttribute("target", "_blank")
 
 			let linkitem = document.createElement("span")
