@@ -6,3 +6,4 @@ Use case: If you use a meeting link more than one, you should find the link ever
 Download from https://github.com/emindeniz99/zoom-link-history/releases/download/0.1/zoomLinkHistory.crx 
 and install to chromium based browser
 
+![](./image.png )
