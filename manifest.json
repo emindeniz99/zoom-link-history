@@ -1,18 +1,22 @@
 {
 	"name": "Zoom History",
-	"description": "Find your latest zoom links",
-	"version": "0.1.1",
+	"description": "Find your previous zoom meeting links",
+	"version": "0.1.2",
 	"browser_action": {
 		"default_popup": "popup.html",
 		"default_icon": "latestzoom.png"
+	},
+	"icons": {
+		"16": "latestzoom.png",
+		"48": "latestzoom.png",
+		"128": "latestzoom.png"
 	},
 	"permissions": ["storage"],
 	"manifest_version": 2,
 	"content_scripts": [
 		{
-		  "matches": ["*://zoom.us/j/*","*://*.zoom.us/j/*"],
-		  "js": ["content.js"]
+			"matches": ["*://zoom.us/j/*", "*://*.zoom.us/j/*"],
+			"js": ["content.js"]
 		}
-	  ]
-	 
+	]
 }
