@@ -14,14 +14,12 @@ const isIncluded = (arr, str) => {
 	return false
 }
 
-console.log("zoom history");
-
 chrome.storage.local.get("links", function (data) {
     let url=window.location.href
     // console.log("links", data.links)
     if (Array.isArray(data.links)) {
         if (isIncluded(data.links, url)) {
-            console.log("exist")
+            // console.log("exist")
         } else {
             data.links.unshift([
                 url,
