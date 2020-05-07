@@ -20,16 +20,10 @@ const isIncluded = (arr, str) => {
 	let checklimit = 2
 	for (let i = 0; i < arr.length; i++) {
 		let element = arr[i]
-		console.log(
-			"sa",
-			element[0].match("(zoom.us/j/[0-9]+)")[0] ==
-				str.match("(zoom.us/j/[0-9]+)")[0]
-		)
 		if (
 			element[0].match("(zoom.us/j/[0-9]+)")[0] ==
 			str.match("(zoom.us/j/[0-9]+)")[0]
 		) {
-			console.log("sadasd")
 			return true
 		}
 		checklimit--
@@ -38,25 +32,28 @@ const isIncluded = (arr, str) => {
 	return false
 }
 
-chrome.history.onVisited.addListener((historyItem) => {
-	if (historyItem.url.includes("zoom.us/j/")) {
-		chrome.storage.local.get("links", function (data) {
-			console.log("links", data.links)
-			if (Array.isArray(data.links)) {
-				console.log(isIncluded(data.links, historyItem.url))
-
-				if (isIncluded(data.links, historyItem.url)) {
-					console.log("exists")
-				} else {
-					data.links.unshift([
-						historyItem.url,
-						new Date().toLocaleTimeString(),
-					])
-					chrome.storage.local.set({ links: data.links }, function (
-						data
-					) {})
-				}
-			} else chrome.storage.local.set({ links: [[historyItem.url, new Date().toLocaleTimeString()]] })
-		})
+chrome.tabs.onUpdated.addListener((_, changeinfo, tab) => {
+	if (changeinfo.url){
+		let url=changeinfo.url
+		if (url.includes("zoom.us/j/")) {
+			chrome.storage.local.get("links", function (data) {
+				console.log("links", data.links)
+				if (Array.isArray(data.links)) {
+					if (isIncluded(data.links, url)) {
+						console.log("exist")
+					} else {
+						data.links.unshift([
+							url,
+							new Date().toLocaleTimeString(),
+						])
+						chrome.storage.local.set(
+							{ links: data.links },
+							function (data) {}
+						)
+					}
+				} else chrome.storage.local.set({ links: [[url, new Date().toLocaleTimeString()]] })
+			})
+		}
 	}
+		
 })
